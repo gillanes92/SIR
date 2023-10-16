@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+           http://www.springframework.org/schema/tx
+           http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+           http://www.springframework.org/schema/jee
+           http://www.springframework.org/schema/jee/spring-jee-3.0.xsd">
+
+	<bean id="simpleUrlMapping"
+		class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="order" value="1" />
+		<property name="mappings">
+			<props>
+				<prop key="/login.htm">loginController</prop>
+				<!--<prop key="/register.htm">registerController</prop> -->
+				<prop key="/forgot-password.htm">forgotPasswordController</prop>
+				<prop key="/home.htm">homeController</prop>
+				<prop key="/cargaRendiciones.htm">cargaRendicionesController</prop>
+				<prop key="/detalleRendicion.htm">detalleRendicionController</prop>
+				<prop key="/cargaTransacciones.htm">cargaTransaccionesController</prop>
+				<prop key="/detalleTransaccion.htm">detalleTransaccionController</prop>
+				<prop key="/tarjetasRegistradas.htm">tarjetasRegistradasController</prop>
+				<prop key="/cargaPagosMasivos.htm">cargaPagosMasivosController</prop>
+				<prop key="/transacciones.htm">transaccionesController</prop>
+
+
+				<prop key="/servicio_login.htm">serviceLoginController</prop>
+				<prop key="/servicio_rendicion.htm">serviceRendicionController</prop>
+				<prop key="/servicio_transaccion.htm">serviceTransaccionController</prop>
+				<prop key="/servicio_pagos_masivos.htm">servicePagosMasivosController</prop>
+				<prop key="/sesion_usuario.htm">sesionNombreUsuarioController</prop>
+				
+				
+				<prop key="/page404.htm">pageErrorController</prop>
+
+			</props>
+		</property>
+		<property name="interceptors">
+			<list>
+				<ref bean="localeChangeInterceptor" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="loginController"
+		class="cl.ndt.sir.controllers.LoginController"></bean>
+	<bean id="registerController"
+		class="cl.ndt.sir.controllers.RegisterController"></bean>
+	<bean id="forgotPasswordController"
+		class="cl.ndt.sir.controllers.ForgotPasswordController"></bean>
+	<bean id="homeController"
+		class="cl.ndt.sir.controllers.HomeController">
+		<property name="usuarioManager" ref="usuarioManager" />
+		<property name="usuarioDao" ref="usuarioDao" />
+	</bean>
+	<bean id="cargaRendicionesController"
+		class="cl.ndt.sir.controllers.CargaRendicionController">
+		<property name="usuarioManager" ref="usuarioManager" />
+		<property name="rendicionesDao" ref="rendicionesDao" />
+	</bean>
+	<bean id="detalleRendicionController"
+		class="cl.ndt.sir.controllers.DetalleRendicionController">
+		<property name="usuarioManager" ref="usuarioManager" />
+		<property name="rendicionesDao" ref="rendicionesDao" />
+	</bean>
+	<bean id="cargaTransaccionesController"
+		class="cl.ndt.sir.controllers.CargaTransaccionController">
+		<property name="usuarioManager" ref="usuarioManager" />
+		<property name="rendicionesDao" ref="rendicionesDao" />
+	</bean>
+	<bean id="detalleTransaccionController"
+		class="cl.ndt.sir.controllers.DetalleTransaccionController">
+		<property name="usuarioManager" ref="usuarioManager" />
+		<property name="rendicionesDao" ref="rendicionesDao" />
+	</bean>
+	<bean id="tarjetasRegistradasController"
+		class="cl.ndt.sir.controllers.TarjetasRegistradasController">
+		<property name="usuarioManager" ref="usuarioManager" />
+		<property name="rendicionesDao" ref="rendicionesDao" />
+	</bean>
+	<bean id="cargaPagosMasivosController"
+		class="cl.ndt.sir.controllers.CargaPagosMasivosController">
+		<property name="usuarioManager" ref="usuarioManager" />
+		<property name="oneClickDao" ref="oneClickDao" />
+	</bean>
+	<bean id="transaccionesController"
+		class="cl.ndt.sir.controllers.TransaccionesController">
+		<property name="usuarioManager" ref="usuarioManager" />
+		<property name="rendicionesDao" ref="rendicionesDao" />
+	</bean>
+
+	<bean id="sesionNombreUsuarioController"
+		name="sesionNombreUsuarioController"
+		class="cl.ndt.sir.controllers.SesionNombreUsuarioController">
+		<property name="usuarioManager" ref="usuarioManager" />
+	</bean>
+
+	<bean id="pageErrorController"
+		class="cl.ndt.sir.controllers.PageErrorController">
+		<property name="usuarioManager" ref="usuarioManager" />
+		<property name="usuarioDao" ref="usuarioDao" />
+	</bean>
+
+	<bean id="serviceLoginController"
+		class="cl.ndt.sir.services.ServiceLoginController">
+		<property name="usuarioDao" ref="usuarioDao" />
+	</bean>
+
+	<bean id="serviceRendicionController"
+		class="cl.ndt.sir.services.ServiceRendicionController">
+		<property name="usuarioManager" ref="usuarioManager" />
+		<property name="rendicionesDao" ref="rendicionesDao" />
+	</bean>
+	
+	<bean id="serviceTransaccionController"
+		class="cl.ndt.sir.services.ServiceTransaccionController">
+		<property name="usuarioManager" ref="usuarioManager" />
+		<property name="rendicionesDao" ref="rendicionesDao" />
+	</bean>
+
+	<bean id="servicePagosMasivosController"
+		class="cl.ndt.sir.services.ServicePagosMasivosController">
+		<property name="usuarioManager" ref="usuarioManager" />
+		<property name="oneClickDao" ref="oneClickDao" />
+		<property name="rendicionesDao" ref="rendicionesDao" />
+	</bean>
+	
+	
+	
+
+
+	<!-- INICIO IMPL -->
+
+	<bean name="usuarioManager"
+		class="cl.ndt.sir.dao.Impl.UsuarioManagerImpl">
+		<property name="usuarioDao" ref="usuarioDao" />
+		<property name="rolDao" ref="rolDao" />
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+
+	<bean id="usuarioDao" name="usuarioDao"
+		class="cl.ndt.sir.dao.Impl.UsuarioDaoImpl">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+
+	<bean id="rolDao" name="rolDao"
+		class="cl.ndt.sir.dao.Impl.RolDaoImpl">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+
+	<bean id="rendicionesDao" name="rendicionesDao"
+		class="cl.ndt.sir.dao.Impl.RendicionesDaoImpl">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="oneClickDao" name="oneClickDao"
+		class="cl.ndt.sir.dao.Impl.OneClickDaoImpl">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<!-- FIN IMPL -->
+
+
+	<bean id="localeChangeInterceptor"
+		class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+		<property name="paramName" value="locale" />
+	</bean>
+
+	<bean id="jspViewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView" />
+		<property name="prefix" value="/WEB-INF/jsp/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+	<jee:jndi-lookup id="dataSource" jndi-name="java:/SIR" />
+</beans>

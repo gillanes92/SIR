@@ -1,0 +1,419 @@
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://www.example.org/EXP_SOAP_RECAUDACIONES/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" name="EXP_SOAP_RECAUDACIONES" targetNamespace="http://www.example.org/EXP_SOAP_RECAUDACIONES/">
+<wsdl:types>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/EXP_SOAP_RECAUDACIONES/">
+<xsd:element name="ConsultaDeudaRequest">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="Header" type="tns:HeaderRequest"> </xsd:element>
+<xsd:element name="Body" type="tns:BodyConsultaDeudaRequestType"> </xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="ConsultaDeudaResponse">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="Header" type="tns:HeaderResponse"> </xsd:element>
+<xsd:element name="Body" type="tns:BodyConsultaDeudaResponseType"> </xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="NotificacionPagoRequest">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="Header" type="tns:HeaderRequest"> </xsd:element>
+<xsd:element name="Body" type="tns:BodyNotificacionPagoRequestType"> </xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="NotificacionPagoResponse">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="Header" type="tns:HeaderResponse"> </xsd:element>
+<xsd:element name="Body" type="tns:BodyNotificacionPagoResponseType"> </xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="ReversaPagoRequest">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="Header" type="tns:HeaderRequest"> </xsd:element>
+<xsd:element name="Body" type="tns:BodyReversaPagoRequestType"> </xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:element name="ReversaPagoResponse">
+<xsd:complexType>
+<xsd:sequence>
+<xsd:element name="Header" type="tns:HeaderResponse"> </xsd:element>
+<xsd:element name="Body" type="tns:BodyReversaPagoResponseType"> </xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:element>
+<xsd:complexType name="HeaderRequest">
+<xsd:sequence>
+<xsd:element name="SistemaOrigen">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="10"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="FechaHora" type="xsd:string"/>
+<xsd:element name="Funcionalidad">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="50"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+<xsd:element name="CodSistema">
+<xsd:simpleType>
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="10"/>
+</xsd:restriction>
+</xsd:simpleType>
+</xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+<xsd:complexType name="HeaderResponse">
+<xsd:sequence>
+<xsd:element name="IdPeticion" type="xsd:string"/>
+</xsd:sequence>
+</xsd:complexType>
+<xsd:simpleType name="CodigoResultado">
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="3"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="DescripcionResultado">
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="250"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="BodyConsultaDeudaRequestType">
+<xsd:sequence>
+<xsd:element name="id_empresa" type="xsd:int"/>
+<xsd:element name="tipo_busqueda" type="tns:tipo_busquedaType"/>
+<xsd:element name="valor_busqueda" type="tns:valor_busquedaType"/>
+<xsd:element name="cod_recaudador" type="tns:cod_recaudadorType"/>
+<xsd:element name="cred_recaudador" type="tns:cred_recaudadorType"/>
+<xsd:element maxOccurs="1" minOccurs="0" name="cod_oficina_recaudador" type="tns:cod_oficina_recaudadorType"/>
+<xsd:element maxOccurs="1" minOccurs="0" name="cod_caja_recaudador" type="tns:cod_caja_recaudadorType"/>
+</xsd:sequence>
+</xsd:complexType>
+<xsd:simpleType name="tipo_busquedaType">
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="25"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="valor_busquedaType">
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="100"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="cod_recaudadorType">
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="20"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="cred_recaudadorType">
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="200"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="cod_oficina_recaudadorType">
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="4"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="cod_caja_recaudadorType">
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="4"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="BodyConsultaDeudaResponseType">
+<xsd:sequence>
+<xsd:element name="codigo_retorno" type="tns:CodigoResultado"/>
+<xsd:element name="descripcion_retorno" type="tns:DescripcionResultado"/>
+<xsd:element maxOccurs="1" minOccurs="0" name="deudas" type="tns:list_of_deudasType"/>
+</xsd:sequence>
+</xsd:complexType>
+<xsd:complexType name="list_of_deudasType">
+<xsd:sequence>
+<xsd:element maxOccurs="unbounded" minOccurs="1" name="deuda" type="tns:deudaType"> </xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+<xsd:complexType name="deudaType">
+<xsd:sequence>
+<xsd:element name="cod_barra" type="tns:cod_barraType"/>
+<xsd:element name="tipo_deuda" type="tns:tipo_deudaType"/>
+<xsd:element name="monto_deuda" type="tns:monto_deudaType"/>
+<xsd:element name="tipo_documento" type="tns:tipo_documentoType"/>
+<xsd:element name="numero_documento" type="tns:numero_documentoType"/>
+<xsd:element name="fecha_emision" type="tns:fecha_emisionType"/>
+<xsd:element name="fecha_vencimiento" type="tns:fecha_vencimientoType"/>
+<xsd:element name="nombre_cliente" type="tns:nombre_clienteType"/>
+<xsd:element name="estado_cliente" type="tns:estado_clienteType"/>
+<xsd:element name="direccion" type="tns:direccionType"/>
+<xsd:element name="mensaje" type="tns:mensajeType"> </xsd:element>
+<xsd:element name="publicidad" type="tns:publicidadType"> </xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+<xsd:simpleType name="cod_barraType">
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="100"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="tipo_deudaType">
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="25"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="monto_deudaType">
+<xsd:restriction base="xsd:double">
+<xsd:pattern value="(\d{1,16})\.?(\d{0,6})?"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="tipo_documentoType">
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="25"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="numero_documentoType">
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="12"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="fecha_emisionType">
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="10"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="fecha_vencimientoType">
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="10"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="nombre_clienteType">
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="300"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="estado_clienteType">
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="1"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="direccionType">
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="300"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="mensajeType">
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="200"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="publicidadType">
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="200"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="BodyNotificacionPagoRequestType">
+<xsd:sequence>
+<xsd:element name="id_empresa" type="xsd:int"/>
+<xsd:element name="cod_recaudador" type="tns:cod_recaudadorType"/>
+<xsd:element maxOccurs="1" minOccurs="0" name="cod_oficina_recaudador" type="tns:cod_oficina_recaudadorType"/>
+<xsd:element maxOccurs="1" minOccurs="0" name="cod_caja_recaudador" type="tns:cod_caja_recaudadorType"/>
+<xsd:element name="cod_barra" type="tns:cod_barraType"/>
+<xsd:element name="numero_comprobante" type="tns:numero_comprobanteType"/>
+<xsd:element name="fecha_rendicion" type="tns:fecha_rendicionType"> </xsd:element>
+<xsd:element name="fecha_pago_recaudador" type="tns:fecha_pago_recaudadorType"> </xsd:element>
+<xsd:element name="hora_pago_recaudador" type="tns:hora_pago_recaudadorType"/>
+<xsd:element name="sesion_bco" type="tns:sesion_bcoType"/>
+<xsd:element name="cod_medio_pago" type="tns:cod_medio_pagoType"> </xsd:element>
+<xsd:element maxOccurs="1" minOccurs="0" name="info_medio_pago1" type="tns:info_medio_pagoType"> </xsd:element>
+<xsd:element maxOccurs="1" minOccurs="0" name="info_medio_pago2" type="tns:info_medio_pagoType"> </xsd:element>
+<xsd:element maxOccurs="1" minOccurs="0" name="info_medio_pago3" type="tns:info_medio_pagoType"> </xsd:element>
+<xsd:element maxOccurs="1" minOccurs="0" name="info_medio_pago4" type="tns:info_medio_pagoType"> </xsd:element>
+<xsd:element maxOccurs="1" minOccurs="0" name="info_medio_pago5" type="tns:info_medio_pagoType"> </xsd:element>
+</xsd:sequence>
+</xsd:complexType>
+<xsd:simpleType name="numero_comprobanteType">
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="25"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="fecha_rendicionType">
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="10"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="fecha_pago_recaudadorType">
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="10"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="hora_pago_recaudadorType">
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="10"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="sesion_bcoType">
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="25"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="cod_medio_pagoType">
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="250"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="info_medio_pagoType">
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="250"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="BodyNotificacionPagoResponseType">
+<xsd:sequence>
+<xsd:element name="codigo_retorno" type="tns:CodigoResultado"/>
+<xsd:element name="descripcion_retorno" type="tns:DescripcionResultado"> </xsd:element>
+<xsd:element name="transaccion_pago_enel" type="tns:transaccion_pago_enelType"/>
+<xsd:element name="fecha_pago_aplicado" type="tns:fecha_pago_aplicadoType"/>
+<xsd:element name="hora_pago_aplicado" type="tns:hora_pago_aplicadoType"/>
+</xsd:sequence>
+</xsd:complexType>
+<xsd:simpleType name="transaccion_pago_enelType">
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="20"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="fecha_pago_aplicadoType">
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="10"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:simpleType name="hora_pago_aplicadoType">
+<xsd:restriction base="xsd:string">
+<xsd:maxLength value="10"/>
+</xsd:restriction>
+</xsd:simpleType>
+<xsd:complexType name="BodyReversaPagoRequestType">
+<xsd:sequence>
+<xsd:element name="id_empresa" type="xsd:int"/>
+<xsd:element name="cod_recaudador" type="tns:cod_recaudadorType"/>
+<xsd:element name="cod_barra" type="tns:cod_barraType"/>
+<xsd:element name="monto_deuda" type="tns:monto_deudaType"/>
+<xsd:element name="transaccion_pago_enel" type="tns:transaccion_pago_enelType"/>
+</xsd:sequence>
+</xsd:complexType>
+<xsd:complexType name="BodyReversaPagoResponseType">
+<xsd:sequence>
+<xsd:element name="codigo_retorno" type="tns:CodigoResultado"/>
+<xsd:element name="descripcion_retorno" type="tns:DescripcionResultado"/>
+</xsd:sequence>
+</xsd:complexType>
+</xsd:schema>
+</wsdl:types>
+<wsdl:message name="NotificacionPagoRequest">
+<wsdl:part element="tns:NotificacionPagoRequest" name="request"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="ReversaPagoResponse">
+<wsdl:part element="tns:ReversaPagoResponse" name="response"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="ConsultaDeudaResponse">
+<wsdl:part element="tns:ConsultaDeudaResponse" name="response"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="ReversaPagoRequest">
+<wsdl:part element="tns:ReversaPagoRequest" name="request"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="NotificacionPagoResponse">
+<wsdl:part element="tns:NotificacionPagoResponse" name="response"> </wsdl:part>
+</wsdl:message>
+<wsdl:message name="ConsultaDeudaRequest">
+<wsdl:part element="tns:ConsultaDeudaRequest" name="request"> </wsdl:part>
+</wsdl:message>
+<wsdl:portType name="EXP_SOAP_RECAUDACIONES_Soap">
+<wsdl:operation name="ConsultaDeuda">
+<wsdl:input message="tns:ConsultaDeudaRequest"> </wsdl:input>
+<wsdl:output message="tns:ConsultaDeudaResponse"> </wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="NotificacionPago">
+<wsdl:input message="tns:NotificacionPagoRequest"> </wsdl:input>
+<wsdl:output message="tns:NotificacionPagoResponse"> </wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="ReversaPago">
+<wsdl:input message="tns:ReversaPagoRequest"> </wsdl:input>
+<wsdl:output message="tns:ReversaPagoResponse"> </wsdl:output>
+</wsdl:operation>
+</wsdl:portType>
+<wsdl:binding name="EXP_SOAP_RECAUDACIONES_Soap12" type="tns:EXP_SOAP_RECAUDACIONES_Soap">
+<soap12:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+<wsdl:operation name="ConsultaDeuda">
+<soap12:operation soapAction="http://webservice.exp_soap_synergia.gdi/ConsultaDeuda" style="document"/>
+<wsdl:input>
+<soap12:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap12:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="NotificacionPago">
+<soap12:operation soapAction="http://webservice.exp_soap_synergia.gdi/NotificacionPago" style="document"/>
+<wsdl:input>
+<soap12:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap12:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="ReversaPago">
+<soap12:operation soapAction="http://webservice.exp_soap_synergia.gdi/ReversaPago" style="document"/>
+<wsdl:input>
+<soap12:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap12:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+</wsdl:binding>
+<wsdl:binding name="EXP_SOAP_RECAUDACIONES_Soap" type="tns:EXP_SOAP_RECAUDACIONES_Soap">
+<soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+<wsdl:operation name="ConsultaDeuda">
+<soap:operation soapAction="http://webservice.exp_soap_synergia.gdi/ConsultaDeuda" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="NotificacionPago">
+<soap:operation soapAction="http://webservice.exp_soap_synergia.gdi/NotificacionPago" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+<wsdl:operation name="ReversaPago">
+<soap:operation soapAction="http://webservice.exp_soap_synergia.gdi/ReversaPago" style="document"/>
+<wsdl:input>
+<soap:body use="literal"/>
+</wsdl:input>
+<wsdl:output>
+<soap:body use="literal"/>
+</wsdl:output>
+</wsdl:operation>
+</wsdl:binding>
+<wsdl:service name="EXP_SOAP_RECAUDACIONES">
+<wsdl:port binding="tns:EXP_SOAP_RECAUDACIONES_Soap" name="EXP_SOAP_RECAUDACIONES_Soap">
+<soap:address location="https://localhost:8080/EXP_SOAP_RECAUDACIONES_Soap"/>
+</wsdl:port>
+<wsdl:port binding="tns:EXP_SOAP_RECAUDACIONES_Soap12" name="EXP_SOAP_RECAUDACIONES_Soap12">
+<soap12:address location="https://exp-soap-recaudaciones-dev.eu.cloudhub.io/EXP_SOAP_RECAUDACIONES/EXP_SOAP_RECAUDACIONES_Soap12"/>
+<soap12:binding transport="http://tempuri.org"/>
+</wsdl:port>
+</wsdl:service>
+</wsdl:definitions>

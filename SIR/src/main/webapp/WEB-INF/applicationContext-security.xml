@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+  xmlns:beans="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:jee="http://www.springframework.org/schema/jee"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans 
+  						http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+              			http://www.springframework.org/schema/security
+               			http://www.springframework.org/schema/security/spring-security-3.1.xsd
+               			http://www.springframework.org/schema/jee 
+						http://www.springframework.org/schema/jee/spring-jee-3.0.xsd">
+        
+        <http auto-config='true' access-denied-page="/page404.htm" >       
+         <!-- sin permisos -->
+         <intercept-url pattern="/index.jsp" access ="IS_AUTHENTICATED_ANONYMOUSLY" />
+    	<intercept-url pattern="/login.htm" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+    	<!--<intercept-url pattern="/register.htm" access="IS_AUTHENTICATED_ANONYMOUSLY" /> -->
+    	<intercept-url pattern="/forgot-password.htm" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+    	<intercept-url pattern="/resources/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+    	
+        <intercept-url pattern="/home.htm" access ="ROLE_home" />
+        <intercept-url pattern="/cargaRendiciones.htm" access ="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <intercept-url pattern="/detalleRendicion.htm" access ="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <intercept-url pattern="/cargaTransacciones.htm" access ="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <intercept-url pattern="/detalleTransaccion.htm" access ="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <intercept-url pattern="/tarjetasRegistradas.htm" access ="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <intercept-url pattern="/cargaPagosMasivos.htm" access ="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <intercept-url pattern="/transacciones.htm" access ="IS_AUTHENTICATED_ANONYMOUSLY" />
+        
+        
+		<intercept-url pattern="/servicio_login.htm" access ="IS_AUTHENTICATED_ANONYMOUSLY" />
+		<intercept-url pattern="/servicio_rendicion.htm" access ="IS_AUTHENTICATED_ANONYMOUSLY" />
+		<intercept-url pattern="/servicio_transaccion.htm" access ="IS_AUTHENTICATED_ANONYMOUSLY" />
+		<intercept-url pattern="/servicio_pagos_masivos.htm" access ="IS_AUTHENTICATED_ANONYMOUSLY" />
+		<intercept-url pattern="/sesion_usuario.htm" access ="IS_AUTHENTICATED_ANONYMOUSLY" />
+		
+    	<intercept-url pattern="/**/**" access ="ROLE_home" />
+        <intercept-url pattern="/**" access ="ROLE_home" />
+        <form-login login-page="/login.htm" authentication-failure-url="/login.htm?login_error=1" />
+        <logout   logout-url="/logout"  delete-cookies="JSESSIONID"  success-handler-ref="consoleLogoutController" />
+        
+    </http>
+ 
+ 	<jee:jndi-lookup id="dataSourceAC" jndi-name="java:/SIR"/>
+ 	
+	<beans:bean id="customUserDetailsService"
+		class="cl.ndt.sir.handler.CustomUserDetailsService">
+ 		<beans:property name="usersByUsernameQuery" value='SELECT
+                      u.USUARIO AS username,
+                      u.password,
+                      u.estado AS enabled,
+                      u."accountNonExpired" AS accountNonExpired,
+                 u."accountNonLocked" AS accountNonLocked ,
+                 u."credentialsNonExpired" AS credentialsNonExpired
+                FROM
+                    acspsec.ACC_USUARIO u
+                WHERE
+                    u.USUARIO =  ?'/>
+		<beans:property name="authoritiesByUsernameQuery" value="SELECT u.USUARIO AS username,
+         		 p.codigo AS authority
+                FROM
+                    acspsec.ACC_USUARIO u
+                        inner join acspsec.ACC_USUARIO_EMPRESA_ROL aer
+                            on aer.id_usuario = u.id_usuario and aer.id_empresa = u.id_empresa
+                        inner join acspsec.ACC_ROL r
+                            on aer.id_rol = r.id_rol
+                        inner join acspsec.ACC_ROL_PERMISO rp
+                            on rp.id_rol = r.id_rol
+                        inner join acspsec.ACC_PERMISO p
+                            on p.id_permiso = rp.id_permiso
+			WHERE
+		          u.USUARIO = ?  " />
+		<beans:property name="dataSource" ref="dataSourceAC" />
+	</beans:bean>
+	
+	<beans:bean id="userDetailsDao" class="cl.ndt.sir.dao.Impl.UserDetailsDaoImpl" >
+		<beans:property name="dataSource" ref="dataSourceAC" />
+	</beans:bean>
+	
+	<beans:bean name="consoleLogoutController" class="cl.ndt.sir.controllers.ConsoleLogoutController">
+        <beans:property name="dataSource" ref="dataSourceAC" />
+    </beans:bean>	
+	
+	<beans:bean id="encoder" class="org.springframework.security.authentication.encoding.ShaPasswordEncoder">
+		<beans:constructor-arg value="512" />
+	</beans:bean>
+	
+	<beans:bean id="authenticationProvider"
+		class="cl.ndt.sir.handler.LimitLoginAuthenticationProvider">
+		<beans:property name="passwordEncoder" ref="encoder" />
+		<beans:property name="userDetailsService" ref="customUserDetailsService" />
+		<beans:property name="userDetailsDao" ref="userDetailsDao" />
+	</beans:bean>
+	 
+	<authentication-manager>
+        <authentication-provider ref="authenticationProvider" />
+    </authentication-manager>
+		 
+</beans:beans>
